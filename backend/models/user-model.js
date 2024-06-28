@@ -3,29 +3,21 @@ const mongoose=require('mongoose');
 const userSchema= mongoose.Schema({
     fullname:{
         type:String,
-        required:true,
+        require:true,
         trim:true,
         minLength:3
     },
     email:{
         type:String,
-        required:true
+        require:true
     },
     password:{
         type:String,
-        required:true
-    },
-    cart:{
-        type:Array,
-        default:[]
+        require:true
     },
     teacherOrStudent:{
         type:String,
         required:true
-    },
-    orders:{
-        type: Array,
-        default:[]
     },
     contact:{
         type:String,
@@ -36,5 +28,5 @@ const userSchema= mongoose.Schema({
     }
 })
 
-module.exports=mongoose.model("users",userSchema);
+module.exports=mongoose.model("Users",userSchema);
 //fkVGza8RP7Ayq6eV

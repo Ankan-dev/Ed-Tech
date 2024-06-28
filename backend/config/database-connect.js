@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://ankan12000220057:fkVGza8RP7Ayq6eV@alldatastorage.ibme5vj.mongodb.net/?retryWrites=true&w=majority&appName=AllDataStorage")
+mongoose.connect("mongodb+srv://ankanmandal2001:AVVhWNKDWxZI9Mx7@cluster0.1xwgjkh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(()=>{
     console.log("Database Connected");
 })
@@ -9,3 +9,5 @@ mongoose.connect("mongodb+srv://ankan12000220057:fkVGza8RP7Ayq6eV@alldatastorage
 })
 
 module.exports = mongoose.connection;
+
+//AVVhWNKDWxZI9Mx7
