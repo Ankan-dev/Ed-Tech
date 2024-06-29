@@ -4,10 +4,11 @@ const mongoose=require('mongoose');
 const productSchema= mongoose.Schema({
     creator:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:teachers
+        ref:'teachers'
     },
     category:{
-
+        type:String,
+        require:true
     },
     image:{
         type:String,
@@ -28,7 +29,7 @@ const productSchema= mongoose.Schema({
     enrolledStudents:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:Users
+            ref:'Users'
         }
     ]
 })

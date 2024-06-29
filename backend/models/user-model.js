@@ -23,10 +23,10 @@ const userSchema= mongoose.Schema({
         type:String
     },
     purchasedCourses:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:products
-        }
+       {
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'products'
+       }
     ],
     createdAt:{
         type:Date,

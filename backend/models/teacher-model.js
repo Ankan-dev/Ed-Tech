@@ -19,7 +19,7 @@ const teacherSchema= mongoose.Schema({
     Products:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:products
+            ref:'products'
         }
     ],
     picture:{
