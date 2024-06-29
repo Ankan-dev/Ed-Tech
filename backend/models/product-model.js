@@ -35,4 +35,3 @@ const productSchema= mongoose.Schema({
 })
 
 module.exports=mongoose.model("products",productSchema);
-//fkVGza8RP7Ayq6eV

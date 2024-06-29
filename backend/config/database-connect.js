@@ -10,5 +10,3 @@ mongoose.connect(process.env.DATABASE_CONNECT)
 })
 
 module.exports = mongoose.connection;
-
-//AVVhWNKDWxZI9Mx7

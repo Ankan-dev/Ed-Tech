@@ -29,4 +29,3 @@ const teacherSchema= mongoose.Schema({
 })
 
 module.exports=mongoose.model("teachers",teacherSchema);
-//fkVGza8RP7Ayq6eV
