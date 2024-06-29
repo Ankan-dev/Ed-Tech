@@ -15,16 +15,22 @@ const userSchema= mongoose.Schema({
         type:String,
         require:true
     },
-    teacherOrStudent:{
-        type:String,
-        required:true
-    },
     contact:{
         type:String,
         required:true
     },
     picture:{
         type:String
+    },
+    purchasedCourses:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:products
+        }
+    ],
+    createdAt:{
+        type:Date,
+        default:Date.now
     }
 })
 

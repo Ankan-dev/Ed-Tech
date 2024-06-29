@@ -16,16 +16,16 @@ const teacherSchema= mongoose.Schema({
         type:String,
         required:true
     },
-    Products:{
-        type: Array,
-        default:[]
-    },
+    Products:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:products
+        }
+    ],
     picture:{
         type:String
     },
-    gstin:{
-        type:String
-    }
+
 })
 
 module.exports=mongoose.model("teachers",teacherSchema);
