@@ -1,7 +1,7 @@
 const mongoose =require('mongoose');
 
 const categorySchema = mongoose.Schema({
-    categoryName:{
+    name:{
         type:String,
         require:true
     },

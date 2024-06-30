@@ -1,13 +1,13 @@
 const category=require('../../models/category-model.js')
 
 const createCategory=async(req,res)=>{
-    const {categoryName}=req.body;
+    const {name}=req.body;
     try{
-        let checkCategory=await category.findOne({categoryName});
+        let checkCategory=await category.findOne({name});
         if(checkCategory){
             res.json({message:"category already exists",success:true});
         }else{
-            let createCategory=await category.create({categoryName});
+            let createCategory=await category.create({name});
             res.json({message:"category is created",success:true});
         }
     }catch(error){
