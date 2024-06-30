@@ -1,6 +1,4 @@
 const mongoose=require('mongoose');
-//mongoose.connect("mongodb+srv://ankan12000220057:fkVGza8RP7Ayq6eV@alldatastorage.ibme5vj.mongodb.net/?retryWrites=true&w=majority&appName=AllDataStorage")
-
 const teacherSchema= mongoose.Schema({
     fullname:{
         type:String,
