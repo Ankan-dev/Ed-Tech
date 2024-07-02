@@ -5,6 +5,7 @@ const cookieParser =require('cookie-parser');
 const userRouter=require("./routes/userRouter.js");
 const categoryRouter=require("./routes/categoryRouter.js")
 const productsRouter=require("./routes/productsRouter.js");
+const cartRouter=require("./routes/cartRouter.js");
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -12,5 +13,6 @@ app.use(cookieParser());
 app.use("/app/user",userRouter);
 app.use("/app/category",categoryRouter);
 app.use("/app/products",productsRouter);
+app.use("/app/cart",cartRouter)
 
 app.listen(3000);
