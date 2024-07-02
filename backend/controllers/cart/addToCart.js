@@ -27,10 +27,6 @@ const addToCart = async (req, res) => {
         // Find index of the item with the same product_id in the cart
         const itemIndex = cart.items.findIndex((item) => item.product_id.toString() === product_id);
         
-        console.log(itemIndex);
-        console.log(product_id);
-        console.log(cart.items);
-
         if (itemIndex > -1) {
             res.json({ message: "Item already exists in the cart", success: false });
         } else {
@@ -47,7 +43,7 @@ const addToCart = async (req, res) => {
             // Save the cart
             await cart.save();
 
-            res.json({ cartData: cart, success: true });
+            res.json({ message:"Element added to the cart", success: true });
         }
 
     } catch (error) {
