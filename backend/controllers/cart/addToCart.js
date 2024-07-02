@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const cartModel = require('../../models/cart-model.js');
 
 const addToCart = async (req, res) => {
@@ -7,36 +8,52 @@ const addToCart = async (req, res) => {
             category,
             product_id,
             image,
-            desciption,
+            description, // Ensure correct spelling
             name,
             price
         } = req.body;
-        const userId = "6683b3d5dc4c2a217c497817";
-        let cart = await cartModel.findById(userId);
+        
+        // Use 'new' keyword to create ObjectId
+        const userId = new mongoose.Types.ObjectId('6683b3d5dc4c2a217c497817');
+        
+        // Use findOne with user field
+        let cart = await cartModel.findOne({ user: userId });
 
         if (!cart) {
-            cart = new cartModel({ userId, items: [] });
+            // Use 'user' not 'userId' when creating a new cart
+            cart = new cartModel({ user: userId, items: [] });
         }
 
-        cart.items.push({
-            creator,
-            category,
-            product_id,
-            image,
-            desciption,
-            name,
-            price
-        });
+        // Find index of the item with the same product_id in the cart
+        const itemIndex = cart.items.findIndex((item) => item.product_id.toString() === product_id);
+        
+        console.log(itemIndex);
+        console.log(product_id);
+        console.log(cart.items);
 
-        await cart.save();
+        if (itemIndex > -1) {
+            res.json({ message: "Item already exists in the cart", success: false });
+        } else {
+            cart.items.push({
+                creator,
+                category,
+                product_id,
+                image,
+                description, // Ensure correct spelling
+                name,
+                price
+            });
 
-        res.json({cartData:cart,success:true});
+            // Save the cart
+            await cart.save();
+
+            res.json({ cartData: cart, success: true });
+        }
+
     } catch (error) {
-        res.json({message:error.message,success:false});
+        console.error(error); // Log the error for debugging
+        res.json({ message: error.message, success: false });
     }
+};
 
-
-
-}
-
-module.exports=addToCart;
+module.exports = addToCart;
