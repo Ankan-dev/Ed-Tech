@@ -1,5 +1,6 @@
 const user = require('../../models/user-model.js');
 const bcrypt =require('bcrypt')
+const jwt =require('jsonwebtoken');
 
 const login= async(req,res)=>{
     const {email,password}=req.body;
@@ -12,7 +13,8 @@ const login= async(req,res)=>{
             if(!validPassword){
                 res.json({message:"Wrong password",success:false});
             }else{
-                res.json({message:`Welcome ${checkUser.fullname}`,success:true});
+                const token=jwt.sign({userId:checkUser._id},"^&$*$%@&^",{expiresIn:'365d'});
+                res.json({message:`Welcome ${checkUser.fullname}`,token,success:true});
             }
         }
     }catch(error){

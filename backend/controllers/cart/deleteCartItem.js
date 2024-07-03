@@ -6,11 +6,11 @@ const deleteCartItem= async (req,res)=>{
     const userId = new mongoose.Types.ObjectId('6683b3d5dc4c2a217c497817');
     try{
         const Cart= await cartModel.findOne({user:userId})
-        console.log(Cart);
+        //console.log(Cart);
         if(Cart){
             Cart.items=Cart.items.filter(item=>item.product_id.toString()!==product);
             await Cart.save();
-            console.log(Cart);
+            //console.log(Cart);
             res.json({message:"product is removed from the cart",success:"true"});
             
         }else{
