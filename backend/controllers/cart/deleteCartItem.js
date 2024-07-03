@@ -9,7 +9,8 @@ const deleteCartItem= async (req,res)=>{
         console.log(Cart);
         if(Cart){
             Cart.items=Cart.items.filter(item=>item.product_id.toString()!==product);
-            console.log(cart);
+            await Cart.save();
+            console.log(Cart);
             res.json({message:"product is removed from the cart",success:"true"});
             
         }else{

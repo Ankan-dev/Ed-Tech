@@ -23,7 +23,7 @@ const getProductsById = async (req,res)=>{
             res.json({message:"products not present",success});
         }
     }catch(error){
-        res.json({message:error.message,success});
+        res.json({message:error.message,success:false});
     }
 }
 
