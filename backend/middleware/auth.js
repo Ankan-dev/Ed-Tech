@@ -1,7 +1,7 @@
 const user=require('../models/user-model.js');
 const jwt =require('jsonwebtoken');
 
-const authentication =(req,res,next)=>{
+const authentication = async(req,res,next)=>{
 
     const token=req.header("Auth");
     if(!token){
@@ -9,7 +9,7 @@ const authentication =(req,res,next)=>{
     }else{
         const decoded=jwt.verify(token,"^&$*$%@&^");
         const id=decoded.userId;
-        const User=user.findById(id);
+        const User= await user.findById(id);
         if(!User){
             res.json({message:"user not found",success:false});
         }else{

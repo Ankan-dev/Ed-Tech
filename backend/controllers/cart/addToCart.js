@@ -14,7 +14,8 @@ const addToCart = async (req, res) => {
         } = req.body;
         
         // Use 'new' keyword to create ObjectId
-        const userId = new mongoose.Types.ObjectId('6683b3d5dc4c2a217c497817');
+        const userId = req.user._id;
+        console.log(userId);
         
         // Use findOne with user field
         let cart = await cartModel.findOne({ user: userId });

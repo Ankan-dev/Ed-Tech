@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const clearCart= async(req,res)=>{
     //const id=req.params.userId;
-    const userId = new mongoose.Types.ObjectId('6683b3d5dc4c2a217c497817');
+    const userId = req.user._id;
 
     try{
         const Cart=await cartModel.findOne({user:userId});

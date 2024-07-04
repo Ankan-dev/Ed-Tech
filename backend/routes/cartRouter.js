@@ -9,9 +9,9 @@ const authentication =require("../middleware/auth.js");
 
 
 router.post('/addToCart',authentication,addToCart);
-router.get('/getCart/:id',authentication,getCartDetails);
+router.get('/getCart',authentication,getCartDetails);
 router.delete('/deleteItem/:id',authentication,deleteCartItem);
-router.delete('/clearCart',authentication,clearCart);
+router.get('/clearCart',authentication,clearCart);
 
 
 module.exports=router
