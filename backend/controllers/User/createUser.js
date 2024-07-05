@@ -1,5 +1,6 @@
 const user = require('../../models/user-model.js');
-const hashPassword =require('../../utils/hashPassword.js')
+const hashPassword =require('../../utils/hashPassword.js');
+const generateToken=require('../../utils/generateToken.js');
 
 const register = async (req, res) => {
     const { fullname, email, password , contact } = req.body;
@@ -10,7 +11,9 @@ const register = async (req, res) => {
         } else {
             const hash = await hashPassword(password);
             let createUser = await user.create({ fullname, email, password:hash, contact });
-            if(createUser){                
+            if(createUser){ 
+                let token=generateToken(createUser);
+                res.cookie(token);               
                 res.json({ message: "user created successfully", success: true });
             }else{
                 res.json({ message: "user can't be created", success: false });
