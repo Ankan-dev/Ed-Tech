@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const bcrypt =require('bcrypt')
 
 const userSchema= mongoose.Schema({
     fullname:{
@@ -33,5 +34,7 @@ const userSchema= mongoose.Schema({
         default:Date.now
     }
 })
+
+
 
 module.exports=mongoose.model("Users",userSchema);
