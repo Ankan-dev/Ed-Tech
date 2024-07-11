@@ -1,23 +1,37 @@
-const user=require('../models/user-model.js');
-const jwt =require('jsonwebtoken');
+const user = require('../models/user-model.js');
+const jwt = require('jsonwebtoken');
 
-const authentication = async(req,res,next)=>{
+const authentication = async (req, res, next) => {
 
-    const token=req.header("Auth");
-    if(!token){
-        res.json({loginStatus:false});
-    }else{
-        const decoded=jwt.verify(token,"^&$*$%@&^");
-        const id=decoded.userId;
-        const User= await user.findById(id);
-        if(!User){
-            res.json({message:"user not found",success:false});
-        }else{
-            req.user=User;
-            next();
+    try {
+        const token = req.cookies?.AccessToken;
+        if (!token) {
+            return res.json({
+                message: "Missing Token",
+                success: false
+            })
         }
+
+        const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET);
+
+        const User = await user.findById(decoded?.id).select("-password -refreshToken");
+
+        if (!User) {
+            return res.json({
+                message: "user dosen't exists",
+                success: false
+            })
+        }
+
+        req.user = User;
+        next();
+    } catch (error) {
+        return res.json({
+            message: error.message,
+            success: false
+        })
     }
 
 }
 
-module.exports=authentication;
+module.exports = authentication;

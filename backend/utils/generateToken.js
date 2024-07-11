@@ -1,8 +1,13 @@
 const jwt =require('jsonwebtoken')
 
-const generateToken=(user)=>{
-    const token=jwt.sign({id:user._id,email:user.email},process.env.JWT_SECRET);
+const generateAccesssToken=(user)=>{
+    const token=jwt.sign({id:user._id,email:user.email},process.env.JWT_ACCESS_TOKEN_SECRET);
     return token;
 }
 
-module.exports=generateToken;
+const generateRefreshToken=(user)=>{
+    const token =jwt.sign({id:user._id,email:user.email},process.env.JWT_REFRESH_TOKEN_SECRET);
+    return token;
+}
+
+module.exports={generateAccesssToken,generateRefreshToken};

@@ -12,6 +12,8 @@ const teacherRouter = require("./routes/teacherRouter.js");
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+
+
 app.use("/app/user",userRouter);
 app.use("/app/category",categoryRouter);
 app.use("/app/products",productsRouter);
