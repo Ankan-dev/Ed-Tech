@@ -26,7 +26,7 @@ const logOutUser= async(req,res)=>{
         .clearCookie("RefreshToken",options)
         .json({
             message:"user logged out successfully",
-            status:success
+            success:true
         })
     }catch(error){
         return res.json({

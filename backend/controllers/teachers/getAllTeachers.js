@@ -3,7 +3,7 @@ const teacher = require('../../models/teacher-model.js');
 
 const getAllTeachers= async (req,res)=>{
     try{
-        const allTeachers=await teacher.find()
+        const allTeachers=await teacher.find().select("-password -refreshToken");
 
         if(allTeachers){
             res.json({Teachers:allTeachers,success:true});

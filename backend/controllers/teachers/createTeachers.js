@@ -1,9 +1,16 @@
 const teacher = require('../../models/teacher-model.js');
-const hashPassword = require('../../utils/hashPassword.js');
+const {hashPassword} = require('../../utils/hashPassword.js');
 
 const createTeacher = async (req, res) => {
-    const { fullname, email, password } = req.body;
+    
     try {
+        const { fullname, email, password } = req.body;
+        if(!fullname || !email || !password){
+            return res.json({
+                message:"Enter the credentials",
+                success:false
+            })
+        }
         const checkTeacher = await teacher.findOne({ email });
         if (checkTeacher) {
             return res.json({ message: "Teacher already exists", success: false });
