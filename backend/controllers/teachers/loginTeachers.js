@@ -1,6 +1,7 @@
 const teacherModel = require('../../models/teacher-model.js');
 const { comparePassword } = require('../../utils/hashPassword.js');
-const { generateAccesssToken,generateRefreshToken } = require('../../utils/generateToken.js');
+const { generateAccesssToken, generateRefreshToken } = require('../../utils/generateToken.js');
+const jwt = require('jsonwebtoken');
 
 const generateAccessAndRefreshToken = async (Teacher) => {
     const AccessToken = generateAccesssToken(Teacher);
@@ -56,4 +57,45 @@ const loginTeacher = async (req, res) => {
     }
 }
 
-module.exports = { loginTeacher };
+const refreshTokenForTeacher = async (req, res) => {
+    const token = req.cookies.RefreshToken
+
+    if (!token) {
+        return res.json({
+            message: "invalid token",
+            success: false
+        })
+    }
+
+    try {
+        const decode = jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET);
+        const teacher = teacherModel.findById(decode.id);
+        if (!teacher) {
+            return res.json({
+                message: "teacher not found",
+                success: false
+            })
+        }
+
+        const { AccessToken, RefreshToken } = generateAccessAndRefreshToken(teacher);
+
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
+
+        res
+            .status(200)
+            .cookie("AccessToken", AccessToken, options)
+            .cookie("RefreshToken", RefreshToken, options)
+            .json({ message: `${User.fullname}, your tokens are renewed`, success: true });
+    }
+    catch (error) {
+        res.json({
+            message: error.message,
+            success: false
+        })
+    }
+}
+
+module.exports = { loginTeacher,refreshTokenForTeacher };
