@@ -23,6 +23,9 @@ const teacherSchema= mongoose.Schema({
     picture:{
         type:String
     },
+    refreshToken:{
+        type:String
+    }
 
 })
 

@@ -5,6 +5,7 @@ const authentication = async (req, res, next) => {
 
     try {
         const token = req.cookies?.AccessToken;
+        
         if (!token) {
             return res.json({
                 message: "Missing Token",
