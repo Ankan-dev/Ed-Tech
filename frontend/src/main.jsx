@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import {RouterProvider,createBrowserRouter} from 'react-router-dom';
 import Layout from './Layout.jsx';
+import HeroSection from './routes/HeroSection.jsx';
 
 
 const router= createBrowserRouter([
@@ -11,7 +12,10 @@ const router= createBrowserRouter([
     path:'/',
     element: <Layout/>,
     children:[
-      
+      {
+        path:'',
+        element:<HeroSection/>
+      }
     ]
   }
 ])
