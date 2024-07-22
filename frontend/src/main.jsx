@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 import {RouterProvider,createBrowserRouter} from 'react-router-dom';
 import Layout from './Layout.jsx';
 import HeroSection from './routes/HeroSection.jsx';
+import RegisterLogin from './routes/RegisterLogin.jsx';
 
 
 const router= createBrowserRouter([
@@ -15,6 +15,9 @@ const router= createBrowserRouter([
       {
         path:'',
         element:<HeroSection/>
+      },{
+        path:'/Register-Login',
+        element:<RegisterLogin/>
       }
     ]
   }

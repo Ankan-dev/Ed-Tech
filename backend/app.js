@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
-//const Port=process.env.PORT || 8080
+const Port=process.env.PORT || 3000
 
 app.use("/app/user",userRouter);
 app.use("/app/category",categoryRouter);
@@ -21,4 +21,11 @@ app.use("/app/products",productsRouter);
 app.use("/app/cart",cartRouter)
 app.use("/app/teacher",teacherRouter)
 
-app.listen(3000);
+try{
+    app.listen(3000 ,()=>{
+        console.log(`serve at port${Port}`);
+    });
+}catch(error){
+    console.log(error);
+}
+

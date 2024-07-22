@@ -6,7 +6,7 @@ import { VscGithub } from "react-icons/vsc";
 
 const footer = () => {
     return (
-        <div className='w-full h-[18vh]  bg-[#f5c79a] md:h-[15vh]'>
+        <div className='w-full min-h-[18vh]  bg-[#f5c79a] md:h-[15vh] pb-3'>
             <div className='md:w-full md:h-20  md:flex md:items-center md:justify-end'>
                 <div className='w-full h-12 flex items-center justify-center text-[#4e1a3e] font-semibold'>
                     <p>© 2024 CodeGuru™. All Rights Reserved.</p>
