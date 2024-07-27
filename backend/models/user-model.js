@@ -17,8 +17,7 @@ const userSchema= mongoose.Schema({
         require:true
     },
     contact:{
-        type:String,
-        required:true
+        type:String
     },
     picture:{
         type:String

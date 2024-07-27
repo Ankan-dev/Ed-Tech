@@ -1,17 +1,68 @@
-import React, { useRef, useState,useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const RegisterLogin = () => {
+
   const loginOptionRef = useRef(null);
   const registerOptionRef = useRef(null);
   const slider = useRef(null);
   const [loginColor, setLoginColor] = useState('white');
   const [registerColor, setRegisterColor] = useState('#4e1a3e');
   const loginForm = useRef(null);
-  const RegisterFrom=useRef(null);
+  const registerForm = useRef(null); // Corrected name
+  const [data, setData] = useState({}); // Initialized to an empty object
+  const [loginData,setLoginData]=useState({});
+  let navigation=useNavigate();
+
+  const getUser = async () => {
+    
+  };
+
+  const handleInput = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
+
+  const handleLoginInput=(e)=>{
+    setLoginData({...loginData,[e.target.name]:e.target.value});
+  }
+
+  const handleLoginSubmit= async(e)=>{
+    e.preventDefault();
+    try{
+      let Response=await axios.post('/app/user/login',loginData);
+      if(Response.data.success==true){
+        try {
+          let response = await axios("/app/user/profile");
+          console.log(response.data);
+          if(response){
+            navigation('/')
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+        
+      }
+    }catch(error){
+      console.log(error.message);
+    }
+    
+    
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(data);
+    try {
+      const response = await axios.post('/app/user/register', data); // Corrected to send data directly
+      console.log(response);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   useEffect(() => {
-    gsap.set(RegisterFrom.current, { x: '100%' });
+    gsap.set(registerForm.current, { x: '100%' });
   }, []);
 
   const openRegisterForm = () => {
@@ -26,8 +77,8 @@ const RegisterLogin = () => {
       { x: '-100%', duration: 2, ease: 'power3.out' },
       '-=2'
     ).fromTo(
-      RegisterFrom.current,
-      {x:'100%'},
+      registerForm.current,
+      { x: '100%' },
       { x: '0', duration: 2, ease: 'power3.out' },
       '-=2'
     )
@@ -36,6 +87,7 @@ const RegisterLogin = () => {
   };
 
   const openLoginForm = () => {
+    
     let animation = gsap.timeline();
     animation.fromTo(
       slider.current,
@@ -47,12 +99,11 @@ const RegisterLogin = () => {
       { x: '0%', duration: 2, ease: 'power3.out' },
       '-=2'
     ).fromTo(
-      RegisterFrom.current,
-      {x:'0%'},
+      registerForm.current,
+      { x: '0%' },
       { x: '100%', duration: 2, ease: 'power3.out' },
       '-=2'
     )
-
     setRegisterColor('#4e1a3e');
     setLoginColor('white');
   };
@@ -70,22 +121,21 @@ const RegisterLogin = () => {
         <div className='w-full h-[80%] my-4 flex'>
           <div ref={loginForm} className='w-full h-full'>
             <h2 className='font-poppins font-bold text-4xl flex flex-col items-center'>Welcome Back</h2>
-            <form className='w-full h-[80%] flex flex-col px-4 items-center'>
-              <input type='email' placeholder='email'  className='w-full h-12 outline-none my-4 px-4 border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]' />
-              <input type='password' placeholder='password' className='w-full h-12 outline-none my-4 px-4 border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]' />
+            <form onSubmit={handleLoginSubmit} className='w-full h-[80%] flex flex-col px-4 items-center'>
+              <input name='email' onChange={handleLoginInput} type='email' placeholder='email' className='w-full h-12 outline-none my-4 px-4 border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]' />
+              <input name='password' onChange={handleLoginInput} type='password' placeholder='password' className='w-full h-12 outline-none my-4 px-4 border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]' />
               <button className='border-[2px] border-solid border-[#4e1a3e] w-[50%] h-[10%] md:h-[20%] font-semibold text-xl hover:bg-[#4e1a3e] hover:text-white ease-in duration-200 active:scale-90'>Login</button>
             </form>
           </div>
-          <div className='w-full h-[80vh] absolute ' ref={RegisterFrom}>
-          <h2 className='font-poppins font-bold text-4xl flex flex-col items-center my-3 md:my-0'>Welcome </h2>
-          <form className='w-full h-[80%] flex flex-col px-4 items-center gap-4 '>
-            <input placeholder='Full Name' type='text' className='w-[90%] h-10 outline-none border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]'></input>
-            <input placeholder='Email' type='email' className='w-[90%] h-10 outline-none border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]'></input>
-            <input placeholder='Password' type='password' className='w-[90%] h-10 outline-none border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]'></input>
-            <button className='border-[2px] border-solid border-[#4e1a3e] w-[50%] h-[10%]  font-semibold text-xl hover:bg-[#4e1a3e] hover:text-white ease-in duration-200 active:scale-90'>Register</button>
-          </form>
+          <div className='w-full h-[80vh] absolute' ref={registerForm}>
+            <h2 className='font-poppins font-bold text-4xl flex flex-col items-center my-3 md:my-0'>Welcome </h2>
+            <form onSubmit={handleSubmit} className='w-full h-[80%] flex flex-col px-4 items-center gap-4'>
+              <input name='fullname' onChange={handleInput} placeholder='Full Name' type='text' className='w-[90%] h-10 outline-none border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]'></input>
+              <input name='email' onChange={handleInput} placeholder='Email' type='email' className='w-[90%] h-10 outline-none border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]'></input>
+              <input name='password' onChange={handleInput} placeholder='Password' type='password' className='w-[90%] h-10 outline-none border-b-4 bg-transparent border-[#4e1a3e] text-[#4e1a3e]'></input>
+              <button className='border-[2px] border-solid border-[#4e1a3e] w-[50%] h-[10%] font-semibold text-xl hover:bg-[#4e1a3e] hover:text-white ease-in duration-200 active:scale-90'>Register</button>
+            </form>
           </div>
-
         </div>
       </div>
     </div>

@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../assets/images/NavLogo.png';
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-
-
-
+import axios from 'axios';
 
 const Nav = () => {
 
   const navigate = useNavigate();
-
-  const [active, setActive] = useState(false);
+ const [active, setActive] = useState(false);
+ const [user,setUser]=useState({});
 
   const activeOptions = () => {
     setActive(!active);
@@ -19,6 +17,9 @@ const Nav = () => {
   const registerLoginRoute = () => {
     navigate('/Register-Login');
   }
+
+
+  
 
   return (
     <nav className='w-full h-[7vh] bg-[#f5c79a] shadow-md fixed top-0 flex justify-between z-20'>
@@ -39,7 +40,7 @@ const Nav = () => {
           <li className='w-full py-3 font-bold text-xl cursor-pointer'>Discussions</li>
           <li className='w-full py-3 font-bold text-xl cursor-pointer'>Others</li>
           <li className='w-full py-3'>
-            <button className='border-solid border-[1px] border-[#f5c79a] px-5 py-1 hover:bg-white ease-in duration-200 hover:text-[#4e1a3e]'>Register</button>
+            <button className='border-solid border-[1px] border-[#f5c79a] px-5 py-1 hover:bg-white ease-in duration-200 hover:text-[#4e1a3e]'>Login</button>
           </li>
         </ul>
       </div>
@@ -53,7 +54,10 @@ const Nav = () => {
         </ul>
       </div>
       <div className=' w-1/5  h-full hidden md:flex items-center justify-end px-5'>
-        <button onClick={registerLoginRoute} className='border-solid border-[2px] border-[#4e1a3e] px-7 py-2 hover:bg-white ease-in duration-200  font-semibold active:scale-[0.90]'>Register</button>
+        <p></p>
+        <img src=''/>
+
+        <button onClick={registerLoginRoute} className='border-solid border-[2px] border-[#4e1a3e] px-7 py-2 hover:bg-white ease-in duration-200  font-semibold active:scale-[0.90]'>Login</button>
       </div>
     </nav>
   );

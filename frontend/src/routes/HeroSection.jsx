@@ -13,6 +13,8 @@ const HeroSection = () => {
     const [category, setcategory] = useState([]);
     const categoryRef=useRef(null);
 
+  
+
     let getCategory= async ()=>{
         try{
             let response=await axios.get('/app/category/getCategory');
