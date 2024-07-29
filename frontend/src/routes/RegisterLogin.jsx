@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { addUser } from '../features/profileSlice';
 
 const RegisterLogin = () => {
 
@@ -15,11 +17,20 @@ const RegisterLogin = () => {
   const [data, setData] = useState({}); // Initialized to an empty object
   const [loginData,setLoginData]=useState({});
   let navigation=useNavigate();
+  let dispatch=useDispatch();
 
-  const getUser = async () => {
+  const getUser=async ()=>{
+    try{
+      const res=await axios.get('/app/user/profile')
+      if(res){
+        return res.data;
+      }
+    }catch(error){
+      console.log(error.message)
+    }
     
-  };
-
+  }
+ 
   const handleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -28,27 +39,19 @@ const RegisterLogin = () => {
     setLoginData({...loginData,[e.target.name]:e.target.value});
   }
 
+
   const handleLoginSubmit= async(e)=>{
     e.preventDefault();
     try{
       let Response=await axios.post('/app/user/login',loginData);
       if(Response.data.success==true){
-        try {
-          let response = await axios("/app/user/profile");
-          console.log(response.data);
-          if(response){
-            navigation('/')
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-        
+        const User=await getUser()
+        navigation('/');
+        dispatch(addUser (User));
       }
     }catch(error){
       console.log(error.message);
     }
-    
-    
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +65,9 @@ const RegisterLogin = () => {
   }
 
   useEffect(() => {
-    gsap.set(registerForm.current, { x: '100%' });
+    if(registerForm.current){
+      gsap.set(registerForm.current, { x: '100%' });
+    }
   }, []);
 
   const openRegisterForm = () => {

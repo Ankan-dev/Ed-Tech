@@ -1,23 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {RouterProvider,createBrowserRouter} from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './Layout.jsx';
 import HeroSection from './routes/HeroSection.jsx';
 import RegisterLogin from './routes/RegisterLogin.jsx';
+import { Provider } from 'react-redux'
+import { store } from './store/store.js';
 
 
-const router= createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path:'/',
-    element: <Layout/>,
-    children:[
+    path: '/',
+    element: <Layout />,
+    children: [
       {
-        path:'',
-        element:<HeroSection/>
-      },{
-        path:'/Register-Login',
-        element:<RegisterLogin/>
+        path: '',
+        element: <HeroSection />
+      }, {
+        path: '/Register-Login',
+        element: <RegisterLogin />
       }
     ]
   }
@@ -25,6 +27,9 @@ const router= createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+
   </React.StrictMode>,
 )
